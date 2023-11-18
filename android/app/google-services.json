@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "882795308293",
+    "project_id": "enigma-8300a",
+    "storage_bucket": "enigma-8300a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:882795308293:android:543a3329a1964c17c1436c",
+        "android_client_info": {
+          "package_name": "com.example.enigma"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSoXSx7jl-Ulf9XlFfLim3xNAGXM-4O1c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

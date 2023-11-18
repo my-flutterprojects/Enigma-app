@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "845941195474",
+    "project_id": "enigma-24725",
+    "storage_bucket": "enigma-24725.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:845941195474:android:f3932c39c34fc1265b630b",
+        "android_client_info": {
+          "package_name": "com.example.enigma"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_u9S9No90ZGldYD44KFJ--MqVFnfqmVo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
