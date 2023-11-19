@@ -15,12 +15,14 @@ class _RegisterPageState extends State<RegisterPage> {
   final _emailcontroller = TextEditingController();
   final _passwordcontroller = TextEditingController();
   final _confirmpasswordcontroller = TextEditingController();
-  var _obscurepw;
+  bool _obscurepw = true;
+  bool _obscurecpw = true;
 
   @override
   void initState() {
     super.initState();
     _obscurepw = true;
+    _obscurecpw = true;
   }
 
   @override
@@ -44,9 +46,8 @@ class _RegisterPageState extends State<RegisterPage> {
     if (_passwordcontroller.text.trim() ==
         _confirmpasswordcontroller.text.trim()) {
       return true;
-    } else {
-      return false;
     }
+    return false;
   }
 
   @override
@@ -150,13 +151,13 @@ class _RegisterPageState extends State<RegisterPage> {
                     horizontal: 25,
                   ),
                   child: TextField(
-                    obscureText: _obscurepw,
+                    obscureText: _obscurecpw,
                     controller: _confirmpasswordcontroller,
                     decoration: InputDecoration(
                       suffixIcon: IconButton(
                           onPressed: () {
                             setState(() {
-                              _obscurepw = !_obscurepw;
+                              _obscurecpw = !_obscurecpw;
                             });
                           },
                           icon: _obscurepw
