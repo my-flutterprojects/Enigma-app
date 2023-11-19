@@ -15,6 +15,13 @@ class _RegisterPageState extends State<RegisterPage> {
   final _emailcontroller = TextEditingController();
   final _passwordcontroller = TextEditingController();
   final _confirmpasswordcontroller = TextEditingController();
+  var _obscurepw;
+
+  @override
+  void initState() {
+    super.initState();
+    _obscurepw = true;
+  }
 
   @override
   void dispose() {
@@ -109,9 +116,18 @@ class _RegisterPageState extends State<RegisterPage> {
                     horizontal: 25,
                   ),
                   child: TextField(
-                    obscureText: true,
+                    obscureText: _obscurepw,
                     controller: _passwordcontroller,
                     decoration: InputDecoration(
+                      suffixIcon: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              _obscurepw = !_obscurepw;
+                            });
+                          },
+                          icon: _obscurepw
+                              ? Icon(Icons.visibility)
+                              : Icon(Icons.visibility_off)),
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.white),
                         borderRadius: BorderRadius.circular(25),
@@ -134,9 +150,18 @@ class _RegisterPageState extends State<RegisterPage> {
                     horizontal: 25,
                   ),
                   child: TextField(
-                    obscureText: true,
+                    obscureText: _obscurepw,
                     controller: _confirmpasswordcontroller,
                     decoration: InputDecoration(
+                      suffixIcon: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              _obscurepw = !_obscurepw;
+                            });
+                          },
+                          icon: _obscurepw
+                              ? Icon(Icons.visibility)
+                              : Icon(Icons.visibility_off)),
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.white),
                         borderRadius: BorderRadius.circular(25),

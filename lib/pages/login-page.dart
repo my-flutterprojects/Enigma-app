@@ -15,12 +15,19 @@ class _LoginPageState extends State<LoginPage> {
   //text controllers
   final _emailcontroller = TextEditingController();
   final _passwordcontroller = TextEditingController();
+  var _obscurepw;
 
   Future signIn() async {
     await FirebaseAuth.instance.signInWithEmailAndPassword(
       email: _emailcontroller.text.trim(),
       password: _passwordcontroller.text.trim(),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _obscurepw = true;
   }
 
   @override
@@ -97,9 +104,18 @@ class _LoginPageState extends State<LoginPage> {
                     horizontal: 25,
                   ),
                   child: TextField(
-                    obscureText: true,
+                    obscureText: _obscurepw,
                     controller: _passwordcontroller,
                     decoration: InputDecoration(
+                      suffixIcon: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              _obscurepw = !_obscurepw;
+                            });
+                          },
+                          icon: _obscurepw
+                              ? Icon(Icons.visibility)
+                              : Icon(Icons.visibility_off)),
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.white),
                         borderRadius: BorderRadius.circular(25),
