@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:validators/validators.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
   const ForgotPasswordPage({super.key});
@@ -11,6 +12,7 @@ class ForgotPasswordPage extends StatefulWidget {
 
 class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   final _emailcontroller = TextEditingController();
+  bool isEmailCorrect = false;
 
   @override
   void dispose() {
@@ -69,14 +71,21 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
             ),
             child: TextField(
               controller: _emailcontroller,
+              onChanged: (val) {
+                setState(() {
+                  isEmailCorrect = isEmail(val);
+                });
+              },
               decoration: InputDecoration(
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: Colors.white),
-                  borderRadius: BorderRadius.circular(25),
+                  borderRadius: BorderRadius.circular(15),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.green),
-                  borderRadius: BorderRadius.circular(25),
+                  borderSide: BorderSide(
+                      color:
+                          isEmailCorrect == false ? Colors.red : Colors.green),
+                  borderRadius: BorderRadius.circular(15),
                 ),
                 hintText: 'Email',
                 fillColor: Colors.grey[200],

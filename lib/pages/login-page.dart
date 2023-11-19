@@ -2,6 +2,7 @@ import 'package:enigma/pages/forgot_pw_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:validators/validators.dart';
 
 class LoginPage extends StatefulWidget {
   final VoidCallback showRegisterPage;
@@ -16,6 +17,7 @@ class _LoginPageState extends State<LoginPage> {
   final _emailcontroller = TextEditingController();
   final _passwordcontroller = TextEditingController();
   var _obscurepw;
+  bool isEmailCorrect = false;
 
   Future signIn() async {
     await FirebaseAuth.instance.signInWithEmailAndPassword(
@@ -80,15 +82,25 @@ class _LoginPageState extends State<LoginPage> {
                     horizontal: 25,
                   ),
                   child: TextField(
+                    keyboardType: TextInputType.emailAddress,
+                    autofillHints: [AutofillHints.email],
                     controller: _emailcontroller,
+                    onChanged: (val) {
+                      setState(() {
+                        isEmailCorrect = isEmail(val);
+                      });
+                    },
                     decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.white),
-                        borderRadius: BorderRadius.circular(25),
+                        borderRadius: BorderRadius.circular(15),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.green),
-                        borderRadius: BorderRadius.circular(25),
+                        borderSide: BorderSide(
+                            color: isEmailCorrect == false
+                                ? Colors.red
+                                : Colors.green),
+                        borderRadius: BorderRadius.circular(15),
                       ),
                       hintText: 'Email',
                       fillColor: Colors.grey[200],
@@ -118,11 +130,11 @@ class _LoginPageState extends State<LoginPage> {
                               : Icon(Icons.visibility_off)),
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.white),
-                        borderRadius: BorderRadius.circular(25),
+                        borderRadius: BorderRadius.circular(15),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.green),
-                        borderRadius: BorderRadius.circular(25),
+                        borderRadius: BorderRadius.circular(15),
                       ),
                       hintText: 'Password',
                       fillColor: Colors.grey[200],

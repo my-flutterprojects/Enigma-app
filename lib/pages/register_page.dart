@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:validators/validators.dart';
 
 class RegisterPage extends StatefulWidget {
   final VoidCallback showLoginPage;
@@ -17,6 +19,8 @@ class _RegisterPageState extends State<RegisterPage> {
   final _confirmpasswordcontroller = TextEditingController();
   bool _obscurepw = true;
   bool _obscurecpw = true;
+  bool isEmailCorrect = false;
+  bool isPasswordValid = true;
 
   @override
   void initState() {
@@ -48,6 +52,12 @@ class _RegisterPageState extends State<RegisterPage> {
       return true;
     }
     return false;
+  }
+
+  bool _validatePassword(String password) {
+    String pattern = r'^(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_])';
+    RegExp regExp = RegExp(pattern);
+    return regExp.hasMatch(password);
   }
 
   @override
@@ -94,14 +104,22 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   child: TextField(
                     controller: _emailcontroller,
+                    onChanged: (val) {
+                      setState(() {
+                        isEmailCorrect = isEmail(val);
+                      });
+                    },
                     decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.white),
-                        borderRadius: BorderRadius.circular(25),
+                        borderRadius: BorderRadius.circular(15),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.green),
-                        borderRadius: BorderRadius.circular(25),
+                        borderSide: BorderSide(
+                            color: isEmailCorrect == false
+                                ? Colors.red
+                                : Colors.green),
+                        borderRadius: BorderRadius.circular(15),
                       ),
                       hintText: 'Email',
                       fillColor: Colors.grey[200],
@@ -119,6 +137,11 @@ class _RegisterPageState extends State<RegisterPage> {
                   child: TextField(
                     obscureText: _obscurepw,
                     controller: _passwordcontroller,
+                    onChanged: (val) {
+                      setState(() {
+                        isPasswordValid = _validatePassword(val);
+                      });
+                    },
                     decoration: InputDecoration(
                       suffixIcon: IconButton(
                           onPressed: () {
@@ -131,15 +154,20 @@ class _RegisterPageState extends State<RegisterPage> {
                               : Icon(Icons.visibility_off)),
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.white),
-                        borderRadius: BorderRadius.circular(25),
+                        borderRadius: BorderRadius.circular(15),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.green),
-                        borderRadius: BorderRadius.circular(25),
+                        borderSide: BorderSide(
+                          color: isPasswordValid ? Colors.green : Colors.red,
+                        ),
+                        borderRadius: BorderRadius.circular(15),
                       ),
                       hintText: 'Password',
                       fillColor: Colors.grey[200],
                       filled: true,
+                      errorText: isPasswordValid
+                          ? null
+                          : 'Must contain uppercase, lowercase, special characters',
                     ),
                   ),
                 ),
@@ -165,15 +193,17 @@ class _RegisterPageState extends State<RegisterPage> {
                               : Icon(Icons.visibility_off)),
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.white),
-                        borderRadius: BorderRadius.circular(25),
+                        borderRadius: BorderRadius.circular(15),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.green),
-                        borderRadius: BorderRadius.circular(25),
+                        borderRadius: BorderRadius.circular(15),
                       ),
                       hintText: 'Confirm Password',
                       fillColor: Colors.grey[200],
                       filled: true,
+                      errorText:
+                          isPasswordValid ? null : 'Passwords do not match',
                     ),
                   ),
                 ),
@@ -183,7 +213,18 @@ class _RegisterPageState extends State<RegisterPage> {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 25),
                   child: GestureDetector(
-                    onTap: signUp,
+                    onTap: () {
+                      if (passwordConfirmed()) {
+                        signUp();
+                      } else {
+                        Fluttertoast.showToast(
+                          msg: 'Passwords do not match',
+                          backgroundColor: Colors.red,
+                          textColor: Colors.white,
+                          fontSize: 16,
+                        );
+                      }
+                    },
                     child: Container(
                       padding: EdgeInsets.all(15),
                       decoration: BoxDecoration(
