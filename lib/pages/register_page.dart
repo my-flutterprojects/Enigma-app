@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:validators/validators.dart';
 
@@ -213,18 +212,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 25),
                   child: GestureDetector(
-                    onTap: () {
-                      if (passwordConfirmed()) {
-                        signUp();
-                      } else {
-                        Fluttertoast.showToast(
-                          msg: 'Passwords do not match',
-                          backgroundColor: Colors.red,
-                          textColor: Colors.white,
-                          fontSize: 16,
-                        );
-                      }
-                    },
+                    onTap: signUp,
                     child: Container(
                       padding: EdgeInsets.all(15),
                       decoration: BoxDecoration(

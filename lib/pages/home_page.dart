@@ -1,7 +1,7 @@
-import 'package:enigma/pages/explore_page.dart';
-import 'package:enigma/pages/message_page.dart';
-import 'package:enigma/pages/notification_page.dart';
-import 'package:enigma/pages/profile_page.dart';
+import 'package:enigma/inapp_pages/explore_page.dart';
+import 'package:enigma/inapp_pages/message_page.dart';
+import 'package:enigma/inapp_pages/notification_page.dart';
+import 'package:enigma/inapp_pages/profile_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
