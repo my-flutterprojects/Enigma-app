@@ -1,3 +1,4 @@
+import 'package:enigma/components/button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -21,27 +22,34 @@ class _RegisterPageState extends State<RegisterPage> {
   bool isEmailCorrect = false;
   bool isPasswordValid = true;
 
-  @override
-  void initState() {
-    super.initState();
-    _obscurepw = true;
-    _obscurecpw = true;
-  }
-
-  @override
-  void dispose() {
-    _emailcontroller.dispose();
-    _passwordcontroller.dispose();
-    _confirmpasswordcontroller.dispose();
-    super.dispose();
-  }
-
   Future signUp() async {
+    showDialog(
+      context: context,
+      builder: (context) => const Center(
+        child: CircularProgressIndicator(),
+      ),
+    );
+    void displayMessage(String message) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text(message),
+        ),
+      );
+    }
+
+    if (_passwordcontroller.text != _confirmpasswordcontroller.text) {
+      Navigator.pop(context);
+      displayMessage("Passwords don't match!");
+      return;
+    }
+
     if (passwordConfirmed()) {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: _emailcontroller.text.trim(),
         password: _passwordcontroller.text.trim(),
       );
+      if (context.mounted) Navigator.pop(context);
     }
   }
 
@@ -57,6 +65,21 @@ class _RegisterPageState extends State<RegisterPage> {
     String pattern = r'^(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_])';
     RegExp regExp = RegExp(pattern);
     return regExp.hasMatch(password);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _obscurepw = true;
+    _obscurecpw = true;
+  }
+
+  @override
+  void dispose() {
+    _emailcontroller.dispose();
+    _passwordcontroller.dispose();
+    _confirmpasswordcontroller.dispose();
+    super.dispose();
   }
 
   @override
@@ -187,7 +210,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               _obscurecpw = !_obscurecpw;
                             });
                           },
-                          icon: _obscurepw
+                          icon: _obscurecpw
                               ? Icon(Icons.visibility)
                               : Icon(Icons.visibility_off)),
                       enabledBorder: OutlineInputBorder(
@@ -201,8 +224,6 @@ class _RegisterPageState extends State<RegisterPage> {
                       hintText: 'Confirm Password',
                       fillColor: Colors.grey[200],
                       filled: true,
-                      errorText:
-                          isPasswordValid ? null : 'Passwords do not match',
                     ),
                   ),
                 ),
@@ -213,22 +234,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   padding: EdgeInsets.symmetric(horizontal: 25),
                   child: GestureDetector(
                     onTap: signUp,
-                    child: Container(
-                      padding: EdgeInsets.all(15),
-                      decoration: BoxDecoration(
-                          color: Colors.green[700],
-                          borderRadius: BorderRadius.circular(25)),
-                      child: Center(
-                        child: Text(
-                          'Sign Up',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ),
+                    child: MyButton(text: 'Sign UP'),
                   ),
                 ),
                 SizedBox(

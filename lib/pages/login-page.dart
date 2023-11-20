@@ -1,3 +1,4 @@
+import 'package:enigma/components/button.dart';
 import 'package:enigma/pages/forgot_pw_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -20,9 +21,31 @@ class _LoginPageState extends State<LoginPage> {
   bool isEmailCorrect = false;
 
   Future signIn() async {
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: _emailcontroller.text.trim(),
-      password: _passwordcontroller.text.trim(),
+    showDialog(
+      context: context,
+      builder: (context) => const Center(
+        child: CircularProgressIndicator(),
+      ),
+    );
+
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: _emailcontroller.text.trim(),
+        password: _passwordcontroller.text.trim(),
+      );
+      Navigator.pop(context);
+    } on FirebaseAuthException catch (e) {
+      Navigator.pop(context);
+      displayMessage(e.code);
+    }
+  }
+
+  void displayMessage(String message) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(message),
+      ),
     );
   }
 
@@ -177,21 +200,8 @@ class _LoginPageState extends State<LoginPage> {
                   padding: EdgeInsets.symmetric(horizontal: 25),
                   child: GestureDetector(
                     onTap: signIn,
-                    child: Container(
-                      padding: EdgeInsets.all(15),
-                      decoration: BoxDecoration(
-                          color: Colors.green[700],
-                          borderRadius: BorderRadius.circular(25)),
-                      child: Center(
-                        child: Text(
-                          'Sign In',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
+                    child: MyButton(
+                      text: 'Sign In',
                     ),
                   ),
                 ),
