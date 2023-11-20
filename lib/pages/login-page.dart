@@ -149,8 +149,8 @@ class _LoginPageState extends State<LoginPage> {
                             });
                           },
                           icon: _obscurepw
-                              ? Icon(Icons.visibility)
-                              : Icon(Icons.visibility_off)),
+                              ? Icon(Icons.visibility_off)
+                              : Icon(Icons.visibility)),
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.white),
                         borderRadius: BorderRadius.circular(15),

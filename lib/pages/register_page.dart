@@ -166,14 +166,15 @@ class _RegisterPageState extends State<RegisterPage> {
                     },
                     decoration: InputDecoration(
                       suffixIcon: IconButton(
-                          onPressed: () {
-                            setState(() {
-                              _obscurepw = !_obscurepw;
-                            });
-                          },
-                          icon: _obscurepw
-                              ? Icon(Icons.visibility)
-                              : Icon(Icons.visibility_off)),
+                        onPressed: () {
+                          setState(() {
+                            _obscurepw = !_obscurepw;
+                          });
+                        },
+                        icon: _obscurepw
+                            ? Icon(Icons.visibility_off)
+                            : Icon(Icons.visibility),
+                      ),
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.white),
                         borderRadius: BorderRadius.circular(15),
@@ -211,8 +212,8 @@ class _RegisterPageState extends State<RegisterPage> {
                             });
                           },
                           icon: _obscurecpw
-                              ? Icon(Icons.visibility)
-                              : Icon(Icons.visibility_off)),
+                              ? Icon(Icons.visibility_off)
+                              : Icon(Icons.visibility)),
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.white),
                         borderRadius: BorderRadius.circular(15),

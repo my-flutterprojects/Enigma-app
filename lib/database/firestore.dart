@@ -24,7 +24,7 @@ class FirestoreDatabase {
   Stream<QuerySnapshot> getPostsStream() {
     final postsStream = FirebaseFirestore.instance
         .collection('Posts')
-        .orderBy('TimeStamp', descending: true)
+        .orderBy('TimeStamp', descending: false)
         .snapshots();
 
     return postsStream;
