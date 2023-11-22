@@ -62,7 +62,7 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   bool _validatePassword(String password) {
-    String pattern = r'^(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_])';
+    String pattern = r'^(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,}$';
     RegExp regExp = RegExp(pattern);
     return regExp.hasMatch(password);
   }
