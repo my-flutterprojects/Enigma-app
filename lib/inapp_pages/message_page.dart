@@ -31,6 +31,7 @@ class _MesssagePageState extends State<MesssagePage> {
       // appBar: AppBar(
       //   backgroundColor: Colors.black,
       // ),
+
       body: SafeArea(
         child: Center(
           child: Column(

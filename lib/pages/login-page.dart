@@ -105,6 +105,7 @@ class _LoginPageState extends State<LoginPage> {
                     horizontal: 25,
                   ),
                   child: TextField(
+                    textInputAction: TextInputAction.next,
                     keyboardType: TextInputType.emailAddress,
                     autofillHints: [AutofillHints.email],
                     controller: _emailcontroller,
@@ -139,6 +140,7 @@ class _LoginPageState extends State<LoginPage> {
                     horizontal: 25,
                   ),
                   child: TextField(
+                    textInputAction: TextInputAction.done,
                     obscureText: _obscurepw,
                     controller: _passwordcontroller,
                     decoration: InputDecoration(
